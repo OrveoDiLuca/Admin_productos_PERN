@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { createProduct } from "./handlers/product"
 
 const router = Router()
 //Routing 
@@ -6,9 +7,7 @@ router.get('/',(req,res) => {
     res.json("Desde GET")
 })
 
-router.post('/',(req,res) => { //Se esta creando un nuevo recurso.
-    res.json("Desde POST")
-})
+router.post('/',createProduct)
 
 router.put('/',(req,res) => { //Reemplaza un recurso completo. 
     res.json("Desde PUT")

@@ -12,7 +12,7 @@ No build, test, or lint scripts are configured yet.
 
 ## Architecture
 
-Early-stage Node.js + TypeScript REST API project. Currently a skeleton — no web framework, routes, or database layer implemented yet.
+Administrador de productos construido con el stack PERN (PostgreSQL, Express, React, Node.js) usando TypeScript. Early-stage REST API project.
 
 - **`src/index.ts`** — entry point
 - **`src/server.ts`** — server utilities
