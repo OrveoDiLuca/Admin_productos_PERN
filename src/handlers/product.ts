@@ -1,25 +1,27 @@
 import { Response, Request } from "express"
-import {check,validationResult} from "express-validator"
 import Product from "../models/Product.model"
 
 
+export const getProducts = async (req: Request,res: Response) => {
+    try {
+        const products = await Product.findAll({
+            order: [
+                ['id','DESC']
+            ],
+            attributes: {exclude: ['createdAt','updatedAt']}
+        })
+        res.json({data: products})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 //es asincrona porque permite parar la ejecucion del codigo mientras se espera la recuperacion de base de datos
 export const createProduct = async (req: Request, res: Response) => { //Se esta creando un nuevo recurso.
-
-    //validacion
-    await check('name').notEmpty().withMessage('El nombre del producto no puede ir vacio').run(req)
-
-    await check('price')
-        .isNumeric().withMessage('El precio del producto debe ser numerico')
-        .notEmpty().withMessage('El precio del producto no puede ir vacio')
-        .custom(value => value > 0).withMessage('El precio del producto debe ser mayor a 0')
-        .run(req)
-    
-    let errors = validationResult(req)
-    if (!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()})
+    try {
+        const product =  await Product.create(req.body) //Instancia el product y lo guarda en la base de datos directamente.
+        res.json({data: product}) 
+    } catch (error) {
+        console.log(error)
     }
-    
-    const product =  await Product.create(req.body) //Instancia el productp y lo guarda en la base de datos directamente.
-    res.json({data: product})
 }
