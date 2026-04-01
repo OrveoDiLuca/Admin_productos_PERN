@@ -1,11 +1,18 @@
 import { Router } from "express"
-import {body} from "express-validator"
-import { createProduct, getProducts } from "./handlers/product"
+import {body,param} from "express-validator"
+import { createProduct, getProductById, getProducts } from "./handlers/product"
 import { handleInputErrors } from "./middleware"
 
 const router = Router()
 //Routing 
 router.get('/', getProducts)//obtiene todos los productos que se encuentran en la base de datos. 
+
+//Obteniendo un producto por su id
+router.get('/:id', 
+    param('id').isInt().withMessage('El id debe ser un numero entero'),
+    handleInputErrors,
+    getProductById
+) //Aca lo que se hace es inyectar el id mediante el routing dinamico de express. 
 
 router.post('/',
     //validacion

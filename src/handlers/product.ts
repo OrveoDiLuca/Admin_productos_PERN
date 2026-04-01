@@ -16,6 +16,19 @@ export const getProducts = async (req: Request,res: Response) => {
     }
 }
 
+export const getProductById = async(req: Request, res: Response) => {
+    try {
+        const { id } = req.params
+        const product = await Product.findByPk(+id)
+        if(!product){
+            return res.status(404).json({error:"No se encontró el producto deseado"})
+        }
+        res.json({data : product})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 //es asincrona porque permite parar la ejecucion del codigo mientras se espera la recuperacion de base de datos
 export const createProduct = async (req: Request, res: Response) => { //Se esta creando un nuevo recurso.
     try {
