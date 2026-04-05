@@ -1,6 +1,6 @@
 import { Router } from "express"
 import {body,param} from "express-validator"
-import { createProduct, getProductById, getProducts } from "./handlers/product"
+import { createProduct, getProductById, getProducts, updateProduct } from "./handlers/product"
 import { handleInputErrors } from "./middleware"
 
 const router = Router()
@@ -27,13 +27,21 @@ router.post('/',
     createProduct
 )
 
-router.put('/',(req,res) => { //Reemplaza un recurso completo. 
-    res.json("Desde PUT")
-})
+router.put('/:id',
+    body('name')
+        .notEmpty().withMessage('El nombre del producto no puede ir vacio'),
+    body('price')
+        .isNumeric().withMessage('El precio del producto debe ser numerico')
+        .notEmpty().withMessage('El precio del producto no puede ir vacio'),
+    body('available')
+        .isBoolean().withMessage('La disponibilidad debe ser de tipo true o false'),
+    handleInputErrors,
+    updateProduct
+)  //Reemplaza un recurso completo.
 
-router.patch('/',(req,res) => { //Actualiza de manera parcial
+router.patch('/',(req,res) => { 
     res.json("Desde PATCH")
-})
+}) //Actualiza de manera parcial
 
 router.delete('/',(req,res) => {
     res.json("Desde DELETE")
