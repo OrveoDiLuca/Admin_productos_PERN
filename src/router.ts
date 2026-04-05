@@ -1,6 +1,6 @@
 import { Router } from "express"
 import {body,param} from "express-validator"
-import { createProduct, getProductById, getProducts, updateProduct } from "./handlers/product"
+import { createProduct, getProductById, getProducts, updateAvailable, updateProduct } from "./handlers/product"
 import { handleInputErrors } from "./middleware"
 
 const router = Router()
@@ -39,9 +39,9 @@ router.put('/:id',
     updateProduct
 )  //Reemplaza un recurso completo.
 
-router.patch('/',(req,res) => { 
-    res.json("Desde PATCH")
-}) //Actualiza de manera parcial
+router.patch('/:id',
+    updateAvailable
+) //Actualiza de manera parcial
 
 router.delete('/',(req,res) => {
     res.json("Desde DELETE")
