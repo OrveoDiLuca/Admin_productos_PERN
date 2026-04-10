@@ -1,6 +1,8 @@
 import express from 'express';
+import SwaggerUiOptions  from 'swagger-ui-express';
 import router from './router';
 import db from './config/db';
+import swaggerSpec from './config/swagger';
 
 //Conexion a la base de datos. 
 export async function connectDB() {
@@ -23,8 +25,7 @@ server.use(express.json())
 
 server.use('/api/products', router)
 
-server.get('/api', (req,res) => {
-    res.json({msg: "Desde API"})
-})
+//Docs 
+server.use('/docs', SwaggerUiOptions.serve, SwaggerUiOptions.setup(swaggerSpec))
 
 export default server
