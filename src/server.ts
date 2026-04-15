@@ -2,6 +2,7 @@ import express from 'express';
 import SwaggerUiOptions  from 'swagger-ui-express';
 import cors, {CorsOptions} from 'cors';
 import router from './router';
+import morgan from 'morgan';
 import db from './config/db';
 import swaggerSpec from './config/swagger';
 
@@ -35,6 +36,8 @@ server.use(cors(corsOptions))
 
 //lectura de datos de formularios
 server.use(express.json())
+
+server.use(morgan('dev'))
 
 server.use('/api/products', router)
 
